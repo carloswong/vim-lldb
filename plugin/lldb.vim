@@ -2,14 +2,11 @@
 " Vim script glue code for LLDB integration
 
 function! s:FindPythonScriptDir()
-  for dir in pathogen#split(&runtimepath)
-    let searchstr = "python-vim-lldb"
-    let candidates = pathogen#glob_directories(dir . "/" . searchstr)
-    if len(candidates) > 0
-      return candidates[0]
-    endif
-  endfor
-  return
+  let searchstr = "python-vim-lldb"
+  let s:path = fnamemodify(resolve(expand('<sfile>:p')), ':h')
+  let s:parent = fnamemodify(s:path, ':h')
+  let s:script_path = s:parent . '/' . searchstr
+  return s:script_path
 endfunction()
 
 function! s:InitLldbPlugin()
